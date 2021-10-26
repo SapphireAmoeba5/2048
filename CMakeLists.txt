@@ -41,3 +41,12 @@ PUBLIC
     include/
     vendor/glfw/include/
 )
+
+target_link_directories(${PROJECT_NAME}
+    PUBLIC vendor/glfw/src
+)
+
+target_link_libraries(${PROJECT_NAME}
+PRIVATE
+    glfw
+)
