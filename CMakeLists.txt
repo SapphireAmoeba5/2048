@@ -33,7 +33,7 @@ add_compile_options(
 
 
 add_subdirectory(vendor/glfw)
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/glad.c)
 
 target_include_directories(${PROJECT_NAME}
 PUBLIC
