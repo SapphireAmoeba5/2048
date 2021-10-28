@@ -33,20 +33,27 @@ add_compile_options(
 
 
 add_subdirectory(vendor/glfw)
-add_executable(${PROJECT_NAME} src/main.cpp src/glad.c)
+add_subdirectory(vendor/glm)
 
-target_include_directories(${PROJECT_NAME}
-PUBLIC
+add_executable(${PROJECT_NAME} 
+    src/main.cpp 
+    src/glad.c
+    src/renderer/renderer.cpp
+    src/2048.cpp
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
     src/
     include/
     vendor/glfw/include/
+    vendor/glm/glm
 )
 
-target_link_directories(${PROJECT_NAME}
-    PUBLIC vendor/glfw/src
+target_link_directories(${PROJECT_NAME} PUBLIC 
+    vendor/glfw/src
 )
 
-target_link_libraries(${PROJECT_NAME}
-PRIVATE
+target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
+    glm
 )
