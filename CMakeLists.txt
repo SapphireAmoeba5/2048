@@ -27,10 +27,12 @@ add_compile_options(
     $<$<CONFIG:Debug>:-O0>
 )
 
- add_link_options(
+add_link_options(
      $<$<CONFIG:Release>:-s>
 )
 
+configure_file("${CMAKE_SOURCE_DIR}/assets/shaders/vertex.vert" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/shaders/vertex.vert" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/shaders/fragment.frag" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/shaders/fragment.frag" COPYONLY)
 
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glm)

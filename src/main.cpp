@@ -1,6 +1,7 @@
 #include "2048.h"
 #include "debug.h"
 
+#include <iostream>
 
 int main()
 {
@@ -8,7 +9,12 @@ int main()
         return -1;
     
     g2048::Run();
-    g2048::Shutdown();
+    
+    if(!g2048::Shutdown())
+    {
+        std::cout<<"Failure shutting down!\n";
+        return 1;
+    }
 
     return 0;
 }
