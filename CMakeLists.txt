@@ -31,8 +31,25 @@ add_link_options(
      $<$<CONFIG:Release>:-s>
 )
 
+# copying shaders to build directory
 configure_file("${CMAKE_SOURCE_DIR}/assets/shaders/vertex.vert" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/shaders/vertex.vert" COPYONLY)
 configure_file("${CMAKE_SOURCE_DIR}/assets/shaders/fragment.frag" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/shaders/fragment.frag" COPYONLY)
+
+
+# Copying all textures to build directory
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/2.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/2.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/4.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/4.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/8.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/8.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/16.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/16.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/32.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/32.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/64.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/64.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/128.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/128.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/256.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/256.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/512.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/512.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/1024.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/1024.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/2048.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/2048.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/4096.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/4096.png" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/assets/textures/8192.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/8192.png" COPYONLY)
 
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glm)
@@ -41,7 +58,10 @@ add_executable(${PROJECT_NAME}
     src/main.cpp 
     src/glad.c
     src/renderer/renderer.cpp
+    src/renderer/Shader.cpp
     src/2048.cpp
+    src/board.cpp
+    vendor/stb_image/stb_image.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -49,6 +69,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     include/
     vendor/glfw/include/
     vendor/glm/glm
+    vendor/stb_image
 )
 
 target_link_directories(${PROJECT_NAME} PUBLIC 

@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "board.h"
+
 namespace g2048
 {
     bool Init()
@@ -13,6 +15,8 @@ namespace g2048
         if(!Renderer::Init())
             return false;
         
+        Board::Init({4, 4});
+
         return true;
     }
 
@@ -22,6 +26,10 @@ namespace g2048
         {   
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            Renderer::BeginBatch();
+
+            
 
             glfwPollEvents();
             glfwSwapBuffers(Renderer::GetWindow());

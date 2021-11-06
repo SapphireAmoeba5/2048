@@ -1,8 +1,13 @@
 #version 460 core
 
-out vec4 u_Color;
+out vec4 o_Color;
 
+in float o_TexIndex;
+in vec2 o_TexCoord;
+
+uniform sampler2D u_Textures[32];
 void main()
 {
-    u_Color = vec4(1.0, 1.0, 1.0, 1.0);
+    int index = int(o_TexIndex);
+    o_Color = texture(u_Textures[index], o_TexCoord);
 }
