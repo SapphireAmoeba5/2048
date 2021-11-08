@@ -30,7 +30,7 @@ namespace g2048
     {
         while(!glfwWindowShouldClose(Renderer::GetWindow()))
         {   
-            glClearColor(0.0f, 0.3f, 0.7f, 1.0f);
+            glClearColor(0.0f, 0.3f, 0.7f, 1.0f); // The nice blue background
             glClear(GL_COLOR_BUFFER_BIT);
 
             Renderer::BeginBatch();

@@ -155,6 +155,7 @@ namespace Renderer
 
     void Draw(const glm::vec2& pos, const glm::vec2& size, int level)
     {
+        // Reset batch if max quads have been submitted
         if(s_Data->QuadCount >= MaxQuadCount)
         {
             EndBatch();
@@ -179,11 +180,12 @@ namespace Renderer
 
     void EndBatch()
     {
+        // Bind vertex buffer, array, etc
         glBindVertexArray(s_Data->VAO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_Data->IBO);
-        glBindBuffer(GL_ARRAY_BUFFER, s_Data->VBO);
         shader->Bind();
 
+        // Add the data to the vertex buffer
         glBufferSubData(GL_ARRAY_BUFFER, 0, MaxVertexCount * sizeof(Vertex), s_Data->verticies);
 
         glDrawElements(GL_TRIANGLES, s_Data->QuadCount * 6, GL_UNSIGNED_INT, 0);

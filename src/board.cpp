@@ -10,11 +10,14 @@ namespace Board
     static int Index(int x, int y);
     static void CoutBoard();
 
+    // Shift the board in one of these directions.
+    // I have to redesign these functions because they kinda suck
     static void MoveLeft();
     static void MoveRight();
     static void MoveUp();
     static void MoveDown();
 
+    // Place a sqaure somewhere on the board randomly
     static void PlaceRandom();
     // Static vars
     static glm::vec2 s_Size;
@@ -32,6 +35,7 @@ namespace Board
         
         // Initializing board
         int count = 2; // Number of starting cells
+
         for(int i = 0; i < s_1DSize; i++)
         {
             if(count > 0 && random() % 5 == 3)
@@ -50,20 +54,16 @@ namespace Board
             s_Board[index] = random() % 2;
             count--;
         }
-        
-        // DEBUG : Printing out board result to STDOUT
-        //CoutBoard();
     }
 
     void Shutdown()
     {
         delete[] s_Board;
-
-
     }
 
     void DrawBoard()
     {
+        // The size that each sqaure should be
         const glm::vec2 size = {Renderer::GetWindowSize().x / s_Size.x,
                                 Renderer::GetWindowSize().y / s_Size.y};
 
@@ -74,6 +74,7 @@ namespace Board
                 int level = s_Board[Index(x,y)];
                 if(level != -1)
                 {
+                    // Calculate the position of the square
                     const glm::vec2 pos = {(0.0f + x) * size.x + (size.x / 2),
                                             (0.0f, y) * size.y + (size.y / 2)};
                     

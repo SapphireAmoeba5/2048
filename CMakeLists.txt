@@ -1,3 +1,5 @@
+# If you remove all the if statements and compile options you should be able to get it to compile on Windows
+
 cmake_minimum_required(VERSION 3.21.3 FATAL_ERROR)
 
 project(2048)
