@@ -10,11 +10,12 @@ namespace Renderer
     bool Shutdown();
 
     void Draw(const glm::vec2& pos, const glm::vec2& size, int level);
-
+    
     void BeginBatch();
     void EndBatch();
 
     const glm::vec2& GetWindowSize();
-    
+    int GetTextureCount();
+
     GLFWwindow* GetWindow();
 }

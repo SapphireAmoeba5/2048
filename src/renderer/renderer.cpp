@@ -13,7 +13,7 @@ namespace Renderer
     static glm::mat4 proj; 
     static glm::mat4 view;
 
-    static glm::vec2 size = {500, 500};
+    static glm::vec2 size = {700, 700};
 
     // Resize callback
     static void resize_callback(GLFWwindow* window, int width, int height)
@@ -155,6 +155,12 @@ namespace Renderer
 
     void Draw(const glm::vec2& pos, const glm::vec2& size, int level)
     {
+        if(s_Data->QuadCount >= MaxQuadCount)
+        {
+            EndBatch();
+            BeginBatch();
+        }
+
         std::array<Vertex, 4> verticies = CreateQuad(pos, size, static_cast<float>(level));
 
         s_Data->verticies[s_Data->VertexCount++] = verticies[0];
@@ -181,6 +187,11 @@ namespace Renderer
         glBufferSubData(GL_ARRAY_BUFFER, 0, MaxVertexCount * sizeof(Vertex), s_Data->verticies);
 
         glDrawElements(GL_TRIANGLES, s_Data->QuadCount * 6, GL_UNSIGNED_INT, 0);
+    }
+
+    int GetTextureCount()
+    {
+        return s_Data->textures.size();
     }
 
     GLFWwindow* GetWindow()

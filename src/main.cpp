@@ -1,5 +1,4 @@
 #include "2048.h"
-#include "debug.h"
 
 #include <iostream>
 

@@ -9,7 +9,6 @@ if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)      # 64 Bit mode
         set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/x64/debug")    
     endif()
 
-
 elseif(${CMAKE_SIZEOF_VOID_P} EQUAL 4)  # 32 Bit mode
     if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
         set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin/x86/release")
@@ -54,6 +53,10 @@ configure_file("${CMAKE_SOURCE_DIR}/assets/textures/8192.png" "${CMAKE_SOURCE_DI
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glm)
 
+add_library(Random-lib
+    vendor/Random/RandomClass/src/Random.cpp
+)
+
 add_executable(${PROJECT_NAME} 
     src/main.cpp 
     src/glad.c
@@ -70,6 +73,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     vendor/glfw/include/
     vendor/glm/glm
     vendor/stb_image
+    vendor/Random/RandomClass/src/
 )
 
 target_link_directories(${PROJECT_NAME} PUBLIC 
@@ -79,4 +83,5 @@ target_link_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     glm
+    Random-lib
 )
