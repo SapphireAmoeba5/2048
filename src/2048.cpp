@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include <macros.h>
 #include "board.h"
 
 void key_press_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -16,8 +17,12 @@ namespace g2048
 
     bool Init()
     {
+        
         if(!Renderer::Init())
+        {
+            CONSOLE_PRINT("FAILURE : Failed to initialize renderer!");
             return false;
+        }
         
         glfwSetKeyCallback(Renderer::GetWindow(), key_press_callback);
 
@@ -48,9 +53,11 @@ namespace g2048
 
     bool Shutdown()
     {
+        CONSOLE_PRINT("Shutting down renderer");
         if(!Renderer::Shutdown())
             return false;
         
+        CONSOLE_PRINT("Shutting down board");
         Board::Shutdown();
 
         return true;

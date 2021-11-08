@@ -3,6 +3,7 @@
 #include <iostream>
 #include <Random.h>
 #include <renderer/renderer.h>
+#include <macros.h>
 
 namespace Board
 {
@@ -26,13 +27,13 @@ namespace Board
     void Init(const glm::vec2& size)
     {
         Random random;
-        
         s_Size = size;
         s_1DSize = size.x * size.y;
         s_Board = new int[s_1DSize];
         
         
         // Initializing board
+        CONSOLE_PRINT("Initializing board");
         int count = 2; // Number of starting cells
 
         for(int i = 0; i < s_1DSize; i++)
@@ -128,10 +129,7 @@ static void Board::PlaceRandom()
         }
     }
     if(!slot)
-    {
-        std::cout<<"No slot available!\n";
         return;
-    }
 
     // Place a square in random slot
     int r;
@@ -142,7 +140,6 @@ static void Board::PlaceRandom()
 
     int val = random() % 2;
     s_Board[r] = val;
-    std::cout<<"Placing square at slot "<<r+1<<" with value "<<(2<<val)<<std::endl;
 }
 
 static void Board::MoveLeft()
@@ -208,11 +205,8 @@ static void Board::MoveLeft()
 
     if(moved)
     {
-        std::cout<<"Shifting left\n";
         PlaceRandom();
     }
-    else
-        std::cout<<"Nowhere to shift\n";
 }
 
 static void Board::MoveRight()
@@ -278,11 +272,8 @@ static void Board::MoveRight()
 
     if(moved)
     {
-        std::cout<<"Shifting right\n";
         PlaceRandom();
     }
-    else
-        std::cout<<"Nowhere to shift\n";
 }
 
 static void Board::MoveUp()
@@ -348,11 +339,8 @@ static void Board::MoveUp()
 
     if(moved)
     {
-        std::cout<<"Shifting right\n";
         PlaceRandom();
     }
-    else
-        std::cout<<"Nowhere to shift\n";
 }
 
 static void Board::MoveDown()
@@ -418,10 +406,6 @@ static void Board::MoveDown()
 
     if(moved)
     {
-        std::cout<<"Shifting right\n";
         PlaceRandom();
     }
-    else
-        std::cout<<"Nowhere to shift\n";
-
 }

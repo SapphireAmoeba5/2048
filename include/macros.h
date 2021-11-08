@@ -1,0 +1,1 @@
+#define CONSOLE_PRINT(x) std::cout<<x<<std::endl;
