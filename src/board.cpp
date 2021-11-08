@@ -8,7 +8,6 @@ namespace Board
 {
     // Static function declarations
     static int Index(int x, int y);
-    static void CoutBoard();
 
     // Shift the board in one of these directions.
     // I have to redesign these functions because they kinda suck
@@ -112,21 +111,6 @@ namespace Board
 static int Board::Index(int x, int y)
 {
     return y * s_Size.x + x;
-}
-
-static void Board::CoutBoard()
-{
-    for(int x = 0; x < s_Size.x; x++)
-    {
-        for(int y = 0; y < s_Size.y; y++)
-        {
-            if(s_Board[Index(x, y)] != -1)
-                std::cout<<s_Board[Index(x, y)]<<" ";
-            else
-                std::cout<<"N ";
-        }
-        std::cout<<"\n";
-    }
 }
 
 static void Board::PlaceRandom()
