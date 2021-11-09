@@ -1,5 +1,6 @@
 #include "board.h"
 
+#include <cstring>
 #include <iostream>
 #include <Random.h>
 #include <renderer/renderer.h>
@@ -33,26 +34,12 @@ namespace Board
         
         
         // Initializing board
-        CONSOLE_PRINT("Initializing board");
+        memset(s_Board, -1, sizeof(int) * s_1DSize);
+
         int count = 2; // Number of starting cells
-
-        for(int i = 0; i < s_1DSize; i++)
+        for(int i = 0; i < count; i++) // Randomly place cells
         {
-            if(count > 0 && random() % 5 == 3)
-            {
-                s_Board[i] = random() % 2;
-                count--;
-            }
-            else
-                s_Board[i] = -1;
-        }
-
-        // Checking if cells are placed. For loop won't run if 'count' is already 0
-        for(; count > 0; count--)
-        {
-            int index = random() % s_1DSize;
-            s_Board[index] = random() % 2;
-            count--;
+            PlaceRandom();
         }
     }
 
@@ -146,58 +133,33 @@ static void Board::MoveLeft()
 {
     bool moved = false;
 
-    for(int i = 0; i < s_Size.x; i++)
+    // Shifts all the blocks to the left and combines them if needed
+    for(int y = 0; y < s_Size.y; y++) // The row being tested
     {
-        for(int x = s_Size.x-1; x > 0; x--)
+        for(int x = 0; x < s_Size.x ;x++) // The main sqaure being tested against
         {
-            for(int y = 0; y < s_Size.x; y++)
+            for(int xi = x+1; xi < s_Size.x; xi++) // the secondary sqaure being tested against
             {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x-1,y);
+                // If both sqaures are -1 then skip to the next one
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] == -1)
+                    continue;
 
-                if(s_Board[nexIndex] == -1 && s_Board[curIndex] != -1)
+                // If the space is empty, move the square into that empty space
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] != -1)
                 {
-                    s_Board[nexIndex] = s_Board[curIndex];
-                    s_Board[curIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(xi,y)];
+                    s_Board[Index(xi,y)] = -1;
+                    xi--;
                 }
-            }
-        }
-    }
-
-    for(int y = 0; y < s_Size.y; y++)
-    {
-        for(int x = 0; x < s_Size.x-1; x++)
-        {
-            int curIndex = Index(x,y);
-            int nexIndex = Index(x+1,y);
-
-            if(s_Board[curIndex] == -1 && s_Board[nexIndex] == -1)
-                continue;
-
-            if(s_Board[curIndex] == s_Board[nexIndex])
-            {
-                s_Board[curIndex] = s_Board[nexIndex] + 1;
-                s_Board[nexIndex] = -1;
-                moved = true;
-            }
-        }   
-    }
-
-    for(int i = 0; i < s_Size.x; i++)
-    {
-        for(int x = s_Size.x-1; x > 0; x--)
-        {
-            for(int y = 0; y < s_Size.x; y++)
-            {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x-1,y);
-
-                if(s_Board[nexIndex] == -1 && s_Board[curIndex] != -1)
+                
+                // If the two sqaures match then add them together
+                else if(s_Board[Index(x,y)] == s_Board[Index(xi,y)])
                 {
-                    s_Board[nexIndex] = s_Board[curIndex];
-                    s_Board[curIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(xi,y)] + 1;
+                    s_Board[Index(xi,y)] = -1;
+                    break;
                 }
             }
         }
@@ -213,58 +175,33 @@ static void Board::MoveRight()
 {
     bool moved = false;
 
-    for(int i = 0; i < s_Size.x; i++)
+    // Shifts all the blocks to the right  and combines them if needed
+    for(int y = 0; y < s_Size.y; y++) // The row being tested
     {
-        for(int x = 0; x < s_Size.x-1; x++)
+        for(int x = s_Size.x-1; x > 0; x--) // The main sqaure being tested against
         {
-            for(int y = 0; y < s_Size.x; y++)
+            for(int xi = x-1; xi >= 0; xi--) // the secondary sqaure being tested against
             {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x+1,y);
+                // If both sqaures are -1 then skip to the next one
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] == -1)
+                    continue;
 
-                if(s_Board[nexIndex] == -1 && s_Board[curIndex] != -1)
+                // If the space is empty, move the square into that empty space
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] != -1)
                 {
-                    s_Board[nexIndex] = s_Board[curIndex];
-                    s_Board[curIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(xi,y)];
+                    s_Board[Index(xi,y)] = -1;
+                    xi--;
                 }
-            }
-        }
-    }
-
-    for(int y = 0; y < s_Size.y; y++)
-    {
-        for(int x = s_Size.x-1; x > 0; x--)
-        {
-            int curIndex = Index(x,y);
-            int nexIndex = Index(x-1,y);
-
-            if(s_Board[curIndex] == -1 && s_Board[nexIndex] == -1)
-                continue;
-
-            if(s_Board[curIndex] == s_Board[nexIndex])
-            {
-                s_Board[curIndex] = s_Board[nexIndex] + 1;
-                s_Board[nexIndex] = -1;
-                moved = true;
-            }
-        }   
-    }
-
-    for(int i = 0; i < s_Size.x; i++)
-    {
-        for(int x = 0; x < s_Size.x-1; x++)
-        {
-            for(int y = 0; y < s_Size.x; y++)
-            {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x+1,y);
-
-                if(s_Board[nexIndex] == -1 && s_Board[curIndex] != -1)
+                
+                // If the two sqaures match then add them together
+                else if(s_Board[Index(x,y)] == s_Board[Index(xi,y)])
                 {
-                    s_Board[nexIndex] = s_Board[curIndex];
-                    s_Board[curIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(xi,y)] + 1;
+                    s_Board[Index(xi,y)] = -1;
+                    break;
                 }
             }
         }
@@ -280,58 +217,33 @@ static void Board::MoveUp()
 {
     bool moved = false;
 
-    for(int i = 0; i < s_Size.y; i++)
+    // Shifts all the blocks up and combines them if needed
+    for(int x = 0; x < s_Size.x; x++) // The row being tested
     {
-        for(int y = s_Size.y-1; y > 0; y--)
+        for(int y = s_Size.y-1; y > 0 ;y--) // The main sqaure being tested against
         {
-            for(int x = 0; x < s_Size.x; x++)
+            for(int yi = y-1; yi >= 0; yi--) // the secondary sqaure being tested against
             {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x,y-1);
+                // If both sqaures are -1 then skip to the next one
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] == -1)
+                    continue;
 
-                if(s_Board[curIndex] == -1 && s_Board[nexIndex] != -1)
+                // If the space is empty, move the square into that empty space
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] != -1)
                 {
-                    s_Board[curIndex] = s_Board[nexIndex];
-                    s_Board[nexIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(x,yi)];
+                    s_Board[Index(x,yi)] = -1;
+                    yi++;
                 }
-            }
-        }
-    }
-
-    for(int x = 0; x < s_Size.x; x++)
-    {
-        for(int y = s_Size.y-1; y > 0; y--)
-        {
-            int curIndex = Index(x,y);
-            int nexIndex = Index(x,y-1);
-
-            if(s_Board[curIndex] == -1 && s_Board[nexIndex] == -1)
-                continue;
-
-            if(s_Board[curIndex] == s_Board[nexIndex])
-            {
-                s_Board[curIndex] = s_Board[nexIndex] + 1;
-                s_Board[nexIndex] = -1;
-                moved = true;
-            }
-        }
-    }
-
-    for(int i = 0; i < s_Size.y; i++)
-    {
-        for(int y = s_Size.y-1; y > 0; y--)
-        {
-            for(int x = 0; x < s_Size.x; x++)
-            {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x,y-1);
-
-                if(s_Board[curIndex] == -1 && s_Board[nexIndex] != -1)
+                
+                // If the two sqaures match then add them together
+                else if(s_Board[Index(x,y)] == s_Board[Index(x,yi)])
                 {
-                    s_Board[curIndex] = s_Board[nexIndex];
-                    s_Board[nexIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(x,yi)] + 1;
+                    s_Board[Index(x,yi)] = -1;
+                    break;
                 }
             }
         }
@@ -347,58 +259,33 @@ static void Board::MoveDown()
 {
     bool moved = false;
 
-    for(int i = 0; i < s_Size.y; i++)
+    // Shifts all the blocks down and combines them if needed
+    for(int x = 0; x < s_Size.x; x++) // The row being tested
     {
-        for(int y = 0; y < s_Size.y-1; y++)
+        for(int y = 0; y < s_Size.y;y++) // The main sqaure being tested against
         {
-            for(int x = 0; x < s_Size.x; x++)
+            for(int yi = y+1; yi < s_Size.y; yi++) // the secondary sqaure being tested against
             {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x,y+1);
+                // If both sqaures are -1 then skip to the next one
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] == -1)
+                    continue;
 
-                if(s_Board[curIndex] == -1 && s_Board[nexIndex] != -1)
+                // If the space is empty, move the square into that empty space
+                if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] != -1)
                 {
-                    s_Board[curIndex] = s_Board[nexIndex];
-                    s_Board[nexIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(x,yi)];
+                    s_Board[Index(x,yi)] = -1;
+                    yi--;
                 }
-            }
-        }
-    }
-
-    for(int x = 0; x < s_Size.x; x++)
-    {
-        for(int y = 0; y < s_Size.y-1; y++)
-        {
-            int curIndex = Index(x,y);
-            int nexIndex = Index(x,y+1);
-
-            if(s_Board[curIndex] == -1 && s_Board[nexIndex] == -1)
-                continue;
-
-            if(s_Board[curIndex] == s_Board[nexIndex])
-            {
-                s_Board[curIndex] = s_Board[nexIndex] + 1;
-                s_Board[nexIndex] = -1;
-                moved = true;
-            }
-        }
-    }
-
-    for(int i = 0; i < s_Size.y; i++)
-    {
-        for(int y = 0; y < s_Size.y-1; y++)
-        {
-            for(int x = 0; x < s_Size.x; x++)
-            {
-                int curIndex = Index(x,y);
-                int nexIndex = Index(x,y+1);
-
-                if(s_Board[curIndex] == -1 && s_Board[nexIndex] != -1)
+                
+                // If the two sqaures match then add them together
+                else if(s_Board[Index(x,y)] == s_Board[Index(x,yi)])
                 {
-                    s_Board[curIndex] = s_Board[nexIndex];
-                    s_Board[nexIndex] = -1;
                     moved = true;
+                    s_Board[Index(x,y)] = s_Board[Index(x,yi)] + 1;
+                    s_Board[Index(x,yi)] = -1;
+                    break;
                 }
             }
         }
@@ -408,4 +295,10 @@ static void Board::MoveDown()
     {
         PlaceRandom();
     }
+}
+
+void Board::ResetBoard(const glm::vec2& size)
+{
+    Shutdown();
+    Init(size);
 }

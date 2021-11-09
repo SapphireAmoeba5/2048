@@ -70,8 +70,7 @@ void key_press_callback(GLFWwindow* window, int key, int scancode, int action, i
 {
     if(key == GLFW_KEY_N && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS)
     {
-        Board::Shutdown();
-        Board::Init(g2048::boardSize);
+        Board::ResetBoard(g2048::boardSize);
     }
 
     if((key == GLFW_KEY_LEFT || key == GLFW_KEY_A) && mods == 0 && action == GLFW_PRESS)
