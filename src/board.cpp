@@ -18,7 +18,7 @@ namespace Board
     static void MoveUp();
     static void MoveDown();
 
-    // Place a sqaure somewhere on the board randomly
+    // Place a tile somewhere on the board randomly
     static void PlaceRandom();
     // Static vars
     static glm::vec2 s_Size;
@@ -50,7 +50,7 @@ namespace Board
 
     void DrawBoard()
     {
-        // The size that each sqaure should be
+        // The size that each tile should be
         const glm::vec2 size = {Renderer::GetWindowSize().x / s_Size.x,
                                 Renderer::GetWindowSize().y / s_Size.y};
 
@@ -63,7 +63,7 @@ namespace Board
                 {
                     // Calculate the position of the square
                     const glm::vec2 pos = {(0.0f + x) * size.x + (size.x / 2),
-                                            (0.0f, y) * size.y + (size.y / 2)};
+                                            (0.0f + y) * size.y + (size.y / 2)};
                     
                     Renderer::Draw(pos, size, s_Board[Index(x,y)]);
                 }
@@ -136,13 +136,16 @@ static void Board::MoveLeft()
     // Shifts all the blocks to the left and combines them if needed
     for(int y = 0; y < s_Size.y; y++) // The row being tested
     {
-        for(int x = 0; x < s_Size.x ;x++) // The main sqaure being tested against
+        for(int x = 0; x < s_Size.x ;x++) // The main tile being tested against
         {
-            for(int xi = x+1; xi < s_Size.x; xi++) // the secondary sqaure being tested against
+            for(int xi = x+1; xi < s_Size.x; xi++) // the secondary tile being tested against
             {
-                // If both sqaures are -1 then skip to the next one
+                // If both tiles are -1 then skip to the next one
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] == -1)
                     continue;
+
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(xi,y)] != -1 && s_Board[Index(x,y)] != s_Board[Index(xi,y)]) // If two (non empty) tiles aren't equal, then
+                    break;
 
                 // If the space is empty, move the square into that empty space
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] != -1)
@@ -153,7 +156,7 @@ static void Board::MoveLeft()
                     xi--;
                 }
                 
-                // If the two sqaures match then add them together
+                // If the two tiles match then add them together
                 else if(s_Board[Index(x,y)] == s_Board[Index(xi,y)])
                 {
                     moved = true;
@@ -178,13 +181,16 @@ static void Board::MoveRight()
     // Shifts all the blocks to the right  and combines them if needed
     for(int y = 0; y < s_Size.y; y++) // The row being tested
     {
-        for(int x = s_Size.x-1; x > 0; x--) // The main sqaure being tested against
+        for(int x = s_Size.x-1; x > 0; x--) // The main tile being tested against
         {
-            for(int xi = x-1; xi >= 0; xi--) // the secondary sqaure being tested against
+            for(int xi = x-1; xi >= 0; xi--) // the secondary tile being tested against
             {
-                // If both sqaures are -1 then skip to the next one
+                // If both tiles are -1 then skip to the next one
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] == -1)
                     continue;
+
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(xi,y)] != -1 && s_Board[Index(x,y)] != s_Board[Index(xi,y)]) // If two (non empty) tiles aren't equal, then
+                    break;
 
                 // If the space is empty, move the square into that empty space
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] != -1)
@@ -195,7 +201,7 @@ static void Board::MoveRight()
                     xi--;
                 }
                 
-                // If the two sqaures match then add them together
+                // If the two tiles match then add them together
                 else if(s_Board[Index(x,y)] == s_Board[Index(xi,y)])
                 {
                     moved = true;
@@ -220,13 +226,16 @@ static void Board::MoveUp()
     // Shifts all the blocks up and combines them if needed
     for(int x = 0; x < s_Size.x; x++) // The row being tested
     {
-        for(int y = s_Size.y-1; y > 0 ;y--) // The main sqaure being tested against
+        for(int y = s_Size.y-1; y > 0 ;y--) // The main tile being tested against
         {
-            for(int yi = y-1; yi >= 0; yi--) // the secondary sqaure being tested against
+            for(int yi = y-1; yi >= 0; yi--) // the secondary tile being tested against
             {
-                // If both sqaures are -1 then skip to the next one
+                // If both tiles are -1 then skip to the next one
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] == -1)
                     continue;
+
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(x,yi)] != -1 && s_Board[Index(x,y)] != s_Board[Index(x,yi)]) // If two (non empty) tiles aren't equal, then
+                    break;
 
                 // If the space is empty, move the square into that empty space
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] != -1)
@@ -237,7 +246,7 @@ static void Board::MoveUp()
                     yi++;
                 }
                 
-                // If the two sqaures match then add them together
+                // If the two tiles match then add them together
                 else if(s_Board[Index(x,y)] == s_Board[Index(x,yi)])
                 {
                     moved = true;
@@ -262,13 +271,16 @@ static void Board::MoveDown()
     // Shifts all the blocks down and combines them if needed
     for(int x = 0; x < s_Size.x; x++) // The row being tested
     {
-        for(int y = 0; y < s_Size.y;y++) // The main sqaure being tested against
+        for(int y = 0; y < s_Size.y;y++) // The main tile being tested against
         {
-            for(int yi = y+1; yi < s_Size.y; yi++) // the secondary sqaure being tested against
+            for(int yi = y+1; yi < s_Size.y; yi++) // the secondary tile being tested against
             {
-                // If both sqaures are -1 then skip to the next one
+                // If both tiles are -1 then skip to the next one
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] == -1)
                     continue;
+
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(x,yi)] != -1 && s_Board[Index(x,y)] != s_Board[Index(x,yi)]) // If two (non empty) tiles aren't equal, then
+                    break;
 
                 // If the space is empty, move the square into that empty space
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] != -1)
@@ -279,7 +291,7 @@ static void Board::MoveDown()
                     yi--;
                 }
                 
-                // If the two sqaures match then add them together
+                // If the two tiles match then add them together
                 else if(s_Board[Index(x,y)] == s_Board[Index(x,yi)])
                 {
                     moved = true;

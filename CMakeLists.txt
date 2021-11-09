@@ -52,6 +52,8 @@ configure_file("${CMAKE_SOURCE_DIR}/assets/textures/2048.png" "${CMAKE_SOURCE_DI
 configure_file("${CMAKE_SOURCE_DIR}/assets/textures/4096.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/4096.png" COPYONLY)
 configure_file("${CMAKE_SOURCE_DIR}/assets/textures/8192.png" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets/textures/8192.png" COPYONLY)
 
+configure_file("${CMAKE_SOURCE_DIR}/README.txt" "${CMAKE_SOURCE_DIR}/build/${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/README.txt" COPYONLY)
+
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glm)
 

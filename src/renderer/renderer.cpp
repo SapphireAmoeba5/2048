@@ -1,6 +1,6 @@
-#include "rendererutil.h"
-#include "OpenGLInit.h"
-#include "Shader.h"
+#include "renderer/rendererutil.h"
+#include "renderer/OpenGLInit.h"
+#include "renderer/Shader.h"
 #include <macros.h>
 
 namespace Renderer

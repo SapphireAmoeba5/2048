@@ -68,20 +68,18 @@ namespace g2048
 
 void key_press_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if(key == GLFW_KEY_N && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS)
-    {
+    if(key == GLFW_KEY_N && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS) // Reset the board
         Board::ResetBoard(g2048::boardSize);
-    }
-
-    if((key == GLFW_KEY_LEFT || key == GLFW_KEY_A) && mods == 0 && action == GLFW_PRESS)
+    
+    if((key == GLFW_KEY_LEFT || key == GLFW_KEY_A) && mods == 0 && action == GLFW_PRESS) // Shift left
         Board::ShiftBoard(Board::Direction::Left);
 
-    else if((key == GLFW_KEY_RIGHT || key == GLFW_KEY_D) && mods == 0 && action == GLFW_PRESS)
+    else if((key == GLFW_KEY_RIGHT || key == GLFW_KEY_D) && mods == 0 && action == GLFW_PRESS) // Shift right
         Board::ShiftBoard(Board::Direction::Right);
 
-    else if((key == GLFW_KEY_UP || key == GLFW_KEY_W) && mods == 0 && action == GLFW_PRESS)
+    else if((key == GLFW_KEY_UP || key == GLFW_KEY_W) && mods == 0 && action == GLFW_PRESS) // Shift up
         Board::ShiftBoard(Board::Direction::Up);
 
-    else if((key == GLFW_KEY_DOWN || key == GLFW_KEY_S) && mods == 0 && action == GLFW_PRESS)
+    else if((key == GLFW_KEY_DOWN || key == GLFW_KEY_S) && mods == 0 && action == GLFW_PRESS) // Shift down
         Board::ShiftBoard(Board::Direction::Down);
 }
