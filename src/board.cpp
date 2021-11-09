@@ -12,7 +12,6 @@ namespace Board
     static int Index(int x, int y);
 
     // Shift the board in one of these directions.
-    // I have to redesign these functions because they kinda suck
     static void MoveLeft();
     static void MoveRight();
     static void MoveUp();
@@ -27,7 +26,6 @@ namespace Board
 
     void Init(const glm::vec2& size)
     {
-        Random random;
         s_Size = size;
         s_1DSize = size.x * size.y;
         s_Board = new int[s_1DSize];
