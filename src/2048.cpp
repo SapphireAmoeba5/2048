@@ -16,8 +16,7 @@ namespace g2048
     static glm::vec2 boardSize = {4.0f, 4.0f};
 
     bool Init()
-    {
-        
+    {   
         if(!Renderer::Init())
         {
             CONSOLE_PRINT("FAILURE : Failed to initialize renderer!");

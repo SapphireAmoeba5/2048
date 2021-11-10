@@ -14,7 +14,7 @@ namespace Renderer
     static glm::mat4 proj; 
     static glm::mat4 view;
 
-    static glm::vec2 size = {700, 700};
+    static glm::vec2 size = {900, 900};
 
     // Resize callback
     static void resize_callback(GLFWwindow* window, int width, int height)

@@ -142,7 +142,7 @@ static void Board::MoveLeft()
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] == -1)
                     continue;
 
-                if(s_Board[Index(x,y)] != -1 && s_Board[Index(xi,y)] != -1 && s_Board[Index(x,y)] != s_Board[Index(xi,y)]) // If two (non empty) tiles aren't equal, then
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(xi,y)] != -1 && s_Board[Index(x,y)] != s_Board[Index(xi,y)])
                     break;
 
                 // If the space is empty, move the square into that empty space
@@ -183,11 +183,13 @@ static void Board::MoveRight()
         {
             for(int xi = x-1; xi >= 0; xi--) // the secondary tile being tested against
             {
+
                 // If both tiles are -1 then skip to the next one
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(xi,y)] == -1)
                     continue;
 
-                if(s_Board[Index(x,y)] != -1 && s_Board[Index(xi,y)] != -1 && s_Board[Index(x,y)] != s_Board[Index(xi,y)]) // If two (non empty) tiles aren't equal, then
+                // If two (non empty) tiles aren't equal then break
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(xi,y)] != -1 && s_Board[Index(x,y)] != s_Board[Index(xi,y)])
                     break;
 
                 // If the space is empty, move the square into that empty space
@@ -196,7 +198,7 @@ static void Board::MoveRight()
                     moved = true;
                     s_Board[Index(x,y)] = s_Board[Index(xi,y)];
                     s_Board[Index(xi,y)] = -1;
-                    xi--;
+                    xi++;
                 }
                 
                 // If the two tiles match then add them together
@@ -232,7 +234,8 @@ static void Board::MoveUp()
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] == -1)
                     continue;
 
-                if(s_Board[Index(x,y)] != -1 && s_Board[Index(x,yi)] != -1 && s_Board[Index(x,y)] != s_Board[Index(x,yi)]) // If two (non empty) tiles aren't equal, then
+                // If two (non empty) tiles aren't equal then break
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(x,yi)] != -1 && s_Board[Index(x,y)] != s_Board[Index(x,yi)])
                     break;
 
                 // If the space is empty, move the square into that empty space
@@ -277,7 +280,8 @@ static void Board::MoveDown()
                 if(s_Board[Index(x,y)] == -1 && s_Board[Index(x,yi)] == -1)
                     continue;
 
-                if(s_Board[Index(x,y)] != -1 && s_Board[Index(x,yi)] != -1 && s_Board[Index(x,y)] != s_Board[Index(x,yi)]) // If two (non empty) tiles aren't equal, then
+                // If two (non empty) tiles aren't equal then break
+                if(s_Board[Index(x,y)] != -1 && s_Board[Index(x,yi)] != -1 && s_Board[Index(x,y)] != s_Board[Index(x,yi)])
                     break;
 
                 // If the space is empty, move the square into that empty space
