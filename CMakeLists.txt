@@ -68,6 +68,7 @@ add_executable(${PROJECT_NAME}
     src/renderer/Shader.cpp
     src/2048.cpp
     src/board.cpp
+    src/2048util.cpp
     vendor/stb_image/stb_image.cpp
 )
 

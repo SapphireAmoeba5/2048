@@ -1,4 +1,6 @@
 #include "2048.h"
+#include "2048util.h"
+
 #include "renderer/renderer.h"
 
 #include <glad/glad.h>
@@ -13,7 +15,7 @@ void key_press_callback(GLFWwindow* window, int key, int scancode, int action, i
 
 namespace g2048
 {
-    static glm::vec2 boardSize = {4.0f, 4.0f};
+    static glm::vec2 boardSize;
 
     bool Init()
     {   
@@ -24,6 +26,10 @@ namespace g2048
         }
         
         glfwSetKeyCallback(Renderer::GetWindow(), key_press_callback);
+
+        // Load the INI file to get the size of the board
+        LoadIniFile("2048.ini", &boardSize);
+        CONSOLE_PRINT("Loaded board size: ("<<boardSize.x<<", "<<boardSize.y<<")");
 
         Board::Init(boardSize);
 
@@ -67,6 +73,13 @@ namespace g2048
 
 void key_press_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    if(key == GLFW_KEY_R && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS)
+    {
+        LoadIniFile("2048.ini", &g2048::boardSize);
+        CONSOLE_PRINT("Loaded board size: ("<<g2048::boardSize.x<<", "<<g2048::boardSize.y<<")");
+        Board::ResetBoard(g2048::boardSize);
+    }
+
     if(key == GLFW_KEY_N && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS) // Reset the board
         Board::ResetBoard(g2048::boardSize);
     
