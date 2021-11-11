@@ -26,7 +26,6 @@ static bool OpenGLInit(GLFWwindow** window, int width, int height, const char* n
     glfwMakeContextCurrent(*window);
     
 
-    
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout<<"Failed to initialize OpenGL context/glad"<<std::endl;
