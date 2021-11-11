@@ -73,7 +73,7 @@ namespace g2048
 
 void key_press_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    if(key == GLFW_KEY_R && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS)
+    if(key == GLFW_KEY_R && mods == GLFW_MOD_CONTROL && action == GLFW_PRESS) // Reset the board and reload INI file
     {
         LoadIniFile("2048.ini", &g2048::boardSize);
         CONSOLE_PRINT("Loaded board size: ("<<g2048::boardSize.x<<", "<<g2048::boardSize.y<<")");

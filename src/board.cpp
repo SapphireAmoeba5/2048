@@ -19,17 +19,19 @@ namespace Board
 
     // Place a tile somewhere on the board randomly
     static void PlaceRandom();
-    // Static vars
-    static glm::vec2 s_Size;
-    static int s_1DSize;
-    static int* s_Board;
+
+    // Static variables
+    static glm::vec2 s_Size = {0.0f, 0.0f};
+    static int s_1DSize = 0;
+
+    // Static arrays
+    static int* s_Board = nullptr;
 
     void Init(const glm::vec2& size)
     {
         s_Size = size;
         s_1DSize = size.x * size.y;
         s_Board = new int[s_1DSize];
-        
         
         // Initializing board
         memset(s_Board, -1, sizeof(int) * s_1DSize);

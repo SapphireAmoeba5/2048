@@ -1,5 +1,5 @@
 #include <2048util.h>
-
+#include <string>
 
 
 
@@ -71,6 +71,7 @@ bool LoadIniFile(const char* path, glm::vec2* boardSize)
     {
         (*boardSize).x = 4;
         (*boardSize).y = 4;
+        ResetIniFile(path);
         return false;
     }
 
