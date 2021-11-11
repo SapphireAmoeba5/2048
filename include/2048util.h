@@ -8,3 +8,5 @@
 #include <macros.h>
 
 bool LoadIniFile(const char* path, glm::ivec2* boardSize);
+
+void RenderSettings(glm::ivec2& boardSize, bool& menuOpen);

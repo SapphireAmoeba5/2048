@@ -1,7 +1,8 @@
 #include <2048util.h>
 #include <string>
 
-
+#include <renderer/renderer.h>
+#include <board.h>
 
 std::string LoadVariable(const std::string& buffer, const std::string& name, size_t offset, size_t* end, bool* ret)
 {
@@ -101,4 +102,69 @@ bool LoadIniFile(const char* path, glm::ivec2* boardSize)
     
 
     return true;
+}
+
+void RenderSettings(glm::ivec2& boardSize, bool& menuOpen)
+{
+    Renderer::NewImGuiFrame();
+
+    // Get the window size and make it the size of the settings menu window
+    glm::vec2 size = Renderer::GetWindowSize();
+    ImGui::SetNextWindowPos({0.0f, 0.0f});
+    ImGui::SetNextWindowSize({size.x, size.y});
+
+    ImGui::Begin("Settings");
+    {
+        // Slider to adjust board size using mouse
+        ImGui::SliderInt2("Board size", &boardSize.x, 1, 100);
+
+        // Arrow buttons that allow you to customize board size with incremental percision
+        ImGui::SetCursorPosX(size.x * 0.15f);
+        if(ImGui::Button("<###0000"))
+        {
+            if(boardSize.x > 0)
+                boardSize.x--;
+        }
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(size.x * 0.15f + 15.0f);
+        if(ImGui::Button(">###0001"))
+        {
+            if(boardSize.x < 100)
+                boardSize.x++;
+        }
+
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(size.x * 0.48f);
+        if(ImGui::Button("<###0002"))
+        {
+            if(boardSize.y > 0)
+                boardSize.y--;
+        }
+        ImGui::SameLine();
+        ImGui::SetCursorPosX(size.x * 0.48f + 15.0f);
+        if(ImGui::Button(">###0003"))
+        {
+            if(boardSize.y < 100)
+                boardSize.y++;
+        }
+
+        // The "Apply" and "Defaults" button
+        ImGui::NewLine();
+        ImGui::Text("Clicking any of these buttons will reset the game");
+        if(ImGui::Button("Apply"))
+        {
+            Board::ResetBoard(boardSize);
+            menuOpen = false;
+        }
+
+        else if(ImGui::Button("Defaults"))
+        {
+            LoadIniFile("2048.ini", &boardSize);
+            Board::ResetBoard(boardSize);
+            menuOpen = false;
+        }
+    }
+    ImGui::End();
+
+    Renderer::RenderImGui();
 }

@@ -55,35 +55,7 @@ namespace g2048
             // Draw settings menu if the menu is open
             if(menuOpen)
             {
-                Renderer::NewImGuiFrame();
-
-                // Get the window size and make it the size of the settings menu window
-                glm::vec2 size = Renderer::GetWindowSize();
-                ImGui::SetNextWindowPos({0.0f, 0.0f});
-                ImGui::SetNextWindowSize({size.x, size.y});
-
-                ImGui::Begin("Settings");
-                {
-                    ImGui::SliderInt2("Board size", &g2048::boardSize.x, 1, 100);
-
-                    ImGui::NewLine();
-                    ImGui::Text("Clicking any of these buttons will reset the game");
-                    if(ImGui::Button("Apply"))
-                    {
-                        Board::ResetBoard(g2048::boardSize);
-                        menuOpen = false;
-                    }
-
-                    else if(ImGui::Button("Defaults"))
-                    {
-                        LoadIniFile("2048.ini", &g2048::boardSize);
-                        Board::ResetBoard(g2048::boardSize);
-                        menuOpen = false;
-                    }
-                }
-                ImGui::End();
-
-                Renderer::RenderImGui();
+                RenderSettings(boardSize, menuOpen);
             }
 
             glfwPollEvents();
