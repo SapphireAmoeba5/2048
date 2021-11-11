@@ -67,7 +67,7 @@ static uint32_t LoadTexture(const char* filepath)
 		return 0;
 
 	unsigned int id = -1;
-	glCreateTextures(GL_TEXTURE_2D, 1, &id);
+	glGenTextures(1, &id);
 	
 
 	glBindTexture(GL_TEXTURE_2D, id);

@@ -21,13 +21,13 @@ namespace Board
     static void PlaceRandom();
 
     // Static variables
-    static glm::vec2 s_Size = {0.0f, 0.0f};
+    static glm::ivec2 s_Size = {0.0f, 0.0f};
     static int s_1DSize = 0;
 
     // Static arrays
     static int* s_Board = nullptr;
 
-    void Init(const glm::vec2& size)
+    void Init(const glm::ivec2& size)
     {
         s_Size = size;
         s_1DSize = size.x * size.y;
@@ -313,7 +313,7 @@ static void Board::MoveDown()
     }
 }
 
-void Board::ResetBoard(const glm::vec2& size)
+void Board::ResetBoard(const glm::ivec2& size)
 {
     Shutdown();
     Init(size);

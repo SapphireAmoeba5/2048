@@ -12,9 +12,9 @@ namespace Board
         Down  = 3
     };
 
-    void Init(const glm::vec2& size);
+    void Init(const glm::ivec2& size);
     void Shutdown();
-    void ResetBoard(const glm::vec2& size);
+    void ResetBoard(const glm::ivec2& size);
     void DrawBoard();
 
     void ShiftBoard(Direction direction);

@@ -7,3 +7,6 @@
 [submodule "vendor/Random"]
 	path = vendor/Random
 	url = https://github.com/SapphireAmoeba5/Random.git
+[submodule "vendor/imgui"]
+	path = vendor/imgui
+	url = https://github.com/ocornut/imgui.git

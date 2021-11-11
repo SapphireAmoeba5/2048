@@ -61,24 +61,44 @@ add_library(Random-lib
     vendor/Random/RandomClass/src/Random.cpp
 )
 
+# add_library(imgui-lib
+#     vendor/imgui/imgui_draw.cpp
+#     vendor/imgui/imgui_tables.cpp
+#     vendor/imgui/imgui_widgets.cpp
+#     vendor/imgui/imgui.cpp
+#     vendor/imgui/imgui_widgets.cpp
+#     vendor/imgui/imgui_impl_glfw.cpp
+#     vendor/imgui/imgui_impl_opengl3.cpp
+# )
+
 add_executable(${PROJECT_NAME} 
     src/main.cpp 
-    src/glad.c
     src/renderer/renderer.cpp
     src/renderer/Shader.cpp
     src/2048.cpp
     src/board.cpp
     src/2048util.cpp
     vendor/stb_image/stb_image.cpp
+    vendor/glad/glad.c
+
+    vendor/imgui/imgui_draw.cpp
+    vendor/imgui/imgui_tables.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/imgui.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/imgui_impl_glfw.cpp
+    vendor/imgui/imgui_impl_opengl3.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     src/
     include/
     vendor/glfw/include/
-    vendor/glm/glm
-    vendor/stb_image
+    vendor/glm/glm/
+    vendor/stb_image/
     vendor/Random/RandomClass/src/
+    vendor/glad/
+    vendor/imgui/
 )
 
 target_link_directories(${PROJECT_NAME} PUBLIC 
@@ -88,5 +108,6 @@ target_link_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     glm
+    #imgui-lib
     Random-lib
 )

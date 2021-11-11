@@ -3,6 +3,7 @@
 #include "renderer/Shader.h"
 #include <macros.h>
 
+
 namespace Renderer
 {
     // Static variables
@@ -48,7 +49,7 @@ namespace Renderer
 
         // Creating vertex buffer
         CONSOLE_PRINT("Initializing vertex buffer");
-        glCreateBuffers(1, &s_Data->VBO);
+        glGenBuffers(1, &s_Data->VBO);
         glBindBuffer(GL_ARRAY_BUFFER, s_Data->VBO);
         glBufferData(GL_ARRAY_BUFFER, MaxVertexCount * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
 
@@ -64,7 +65,7 @@ namespace Renderer
         
         // Creating index buffer
         CONSOLE_PRINT("Initializing index buffer");
-        glCreateBuffers(1, &s_Data->IBO);
+        glGenBuffers(1, &s_Data->IBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_Data->IBO);
 
         //Creating index buffer data
@@ -118,7 +119,8 @@ namespace Renderer
         {
             if(s_Data->textures[i] != 0)
             {
-                glBindTextureUnit(i, s_Data->textures[i]);
+                glActiveTexture(GL_TEXTURE0 + i);
+                glBindTexture(GL_TEXTURE_2D, s_Data->textures[i]);
             }
             else
             {
@@ -211,5 +213,38 @@ namespace Renderer
     GLFWwindow* GetWindow()
     {
         return window;
+    }
+
+    void InitImGui()
+    {
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+        ImGui::StyleColorsDark();
+
+        ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)window, true);
+        ImGui_ImplOpenGL3_Init((char*)glGetString(0x82E9));
+        
+    }
+
+    void NewImGuiFrame()
+    {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+    }
+
+    void RenderImGui()
+    {
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+
+    void ShutdownImGui()
+    {
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
     }
 }

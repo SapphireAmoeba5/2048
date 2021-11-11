@@ -29,7 +29,7 @@ void ResetIniFile(const char* path)
     outFile.close();
 }
 
-bool LoadIniFile(const char* path, glm::vec2* boardSize)
+bool LoadIniFile(const char* path, glm::ivec2* boardSize)
 {
     std::string file;
     
